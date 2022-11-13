@@ -192,63 +192,114 @@
 //Задача 60. Сформируйте трёхмерный массив из неповторяющихся двузначных чисел. Напишите программу,
 //которая будет построчно выводить массив, добавляя индексы каждого элемента.
 //Массив размером 2 x 2 x 2
-Console.WriteLine("введите число строк");
-int rows = int.Parse(Console.ReadLine()!);
-//Кол-во столбцов
-Console.WriteLine("введите число столбцов");
-int columns = int.Parse(Console.ReadLine()!);
-Console.WriteLine("введите число страниц");
-int Page = int.Parse(Console.ReadLine()!);
-int[,,] array = GetArray3(Page, rows, columns, 10, 99); // вызов метода (rows)-строки (columns)-стобцы,мин знач, макс знач
-PrintArray3(array); //печать массива
+// Console.WriteLine("введите число строк");
+// int rows = int.Parse(Console.ReadLine()!);
+// //Кол-во столбцов
+// Console.WriteLine("введите число столбцов");
+// int columns = int.Parse(Console.ReadLine()!);
+// Console.WriteLine("введите число страниц");
+// int Page = int.Parse(Console.ReadLine()!);
+// int[,,] array = GetArray3(Page, rows, columns, 10, 99); // вызов метода (rows)-строки (columns)-стобцы,мин знач, макс знач
+// PrintArray3(array); //печать массива
 
-void PrintArray3(int[,,] Array)
+// void PrintArray3(int[,,] Array)
+// {
+//     for (int i = 0; i < Array.GetLength(0); i++)
+//     { // заполнение страниц (0)
+//         Console.WriteLine($"Page {i}");
+//         for (int j = 0; j < Array.GetLength(1); j++)
+//         { // заполнение строк (1)
+//             for (int k = 0; k < Array.GetLength(2); k++)
+//             { // заполнение столбцов (1)
+//                 Console.Write($"{Array[i, j, k]} ({i},{j},{k}) "); // вывод заполненого массива
+//             }
+//             Console.WriteLine(); // переход но новую строку массива
+//         }
+//         Console.WriteLine("====================");
+//     }
+// }
+// // // метод заполнения массива случайными числами 3х мерного массива
+// int[,,] GetArray3(int m, int n, int h, int minValue, int maxValue)
+// {
+//     int[,,] result = new int[m, n, h];// присвоение массиву временного значения
+//     for (int i = 0; i < m; i++)
+//     {// проход по строкам
+//         for (int j = 0; j < n; j++)
+//         {// проход по столбцам
+//             int k = 0;
+//             while (k < h)
+//             {
+//                 int numb = new Random().Next(minValue, maxValue + 1);
+//                 if (UniqueNumbers(result, numb)) continue;
+//                 result[i, j, k] = numb;
+//                 k++;
+//             }
+//         }
+//     }
+//     return result; //возвращение заполненного массива
+// }
+// bool UniqueNumbers(int[,,] Array, int num)
+// {
+//     for (int i = 0; i < Array.GetLength(0); i++)
+//     {
+//         for (int j = 0; j < Array.GetLength(1); j++)
+//         {
+//             for (int k = 0; k < Array.GetLength(2); k++)
+//             {
+//                 if (Array[i, j, k] == num) return true;
+//             }
+//         }
+//     }
+//     return false;
+// }
+
+//Задача 62. Напишите программу, которая заполнит спирально массив 4 на 4.
+int[,] array = new int[4, 4];
+int count = 0;
+for (int j = 0; j < array.GetLength(1); j++)
 {
-    for (int i = 0; i < Array.GetLength(0); i++)
-    { // заполнение страниц (0)
-        Console.WriteLine($"Page {i}");
-        for (int j = 0; j < Array.GetLength(1); j++)
-        { // заполнение строк (1)
-            for (int k = 0; k < Array.GetLength(2); k++)
-            { // заполнение столбцов (1)
-                Console.Write($"{Array[i, j, k]} ({i},{j},{k}) "); // вывод заполненого массива
-            }
-            Console.WriteLine(); // переход но новую строку массива
-        }
-        Console.WriteLine("====================");
-    }
+    count += 1;
+    array[0, j] += count;
 }
-// // метод заполнения массива случайными числами 3х мерного массива
-int[,,] GetArray3(int m, int n, int h, int minValue, int maxValue)
+for (int i = 1; i < array.GetLength(0); i++)
 {
-    int[,,] result = new int[m, n, h];// присвоение массиву временного значения
-    for (int i = 0; i < m; i++)
-    {// проход по строкам
-        for (int j = 0; j < n; j++)
-        {// проход по столбцам
-            int k = 0;
-            while (k < h)
-            {
-                int numb = new Random().Next(minValue, maxValue + 1);
-                if (UniqueNumbers(result, numb)) continue;
-                result[i, j, k] = numb;
-                k++;
-            }
-        }
-    }
-    return result; //возвращение заполненного массива
+    count += 1;
+    array[i, array.GetLength(0) - 1] += count;
 }
-bool UniqueNumbers(int[,,] Array, int num)
+for (int j = 2; j >= 0; j--)
 {
-    for (int i = 0; i < Array.GetLength(0); i++)
-    {
-        for (int j = 0; j < Array.GetLength(1); j++)
-        {
-            for (int k = 0; k < Array.GetLength(2); k++)
-            {
-                if (Array[i, j, k] == num) return true;
-            }
+    count += 1;
+    array[array.GetLength(1) - 1, j] += count;
+}
+for (int i = 2; i > 0; i--)
+{
+    count += 1;
+    array[i, 0] += count;
+}
+for (int j = 1; j < 3; j++)
+{
+    count += 1;
+    array[1, j] += count;
+}
+for (int i = 2; i < 3; i++)
+{
+    count += 1;
+    array[i, 2] += count;
+}
+for (int j = 1; j > 0; j--)
+{
+    count += 1;
+    array[2, j] += count;
+}
+PrintSpiralArray();
+void PrintSpiralArray()
+{
+    for (int i = 0; i < array.GetLength(0); i++)
+    { // заполнение строк (0)
+        for (int j = 0; j < array.GetLength(1); j++)
+        { // заполнение столбцов (1)
+            Console.Write($"{string.Format("{0:d2}", array[i, j])} "); // вывод заполненого массива
         }
+        Console.WriteLine(); // переход но новую строку массива
     }
-    return false;
 }
